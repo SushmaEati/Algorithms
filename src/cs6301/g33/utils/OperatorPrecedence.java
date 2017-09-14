@@ -11,9 +11,9 @@ import java.math.BigInteger;
  */
 public class OperatorPrecedence {
 	//Set all the operator that can be used in the expression and assign ranks in the rank array accordingly 
-	int rank[] = {5,5,5,5,5,5,4,3,2,2,1,1,1};
-	char operator[]={'(',')','[','[',']',']','!','^','/','*','+','-','|'};
-	int length = 12;
+	int rank[] = {5,5,5,5,5,5,4,3,2,2,1,1,1,1};
+	char operator[]={'(',')','[','[',']',']','!','^','/','*','+','-','|','%'};
+	int length = 14;
 
 	public boolean needsOneOperand(char operator)
 	{
@@ -85,16 +85,27 @@ public class OperatorPrecedence {
 			return number1.multiply(number2);
 		}
 		case '/':{
+			if(number2.equals(0))
+			{
+				System.out.println("Divide by Zero Error!!");
+				throw new IllegalArgumentException();
+			}
 			return number1.divide(number2);
 		}
 		case '^':{
 			return number1.pow(number2.intValue());
 		}
 		case '%':{
-			return number1.divide(number2);
+			if(number2.equals(0))
+			{
+				System.out.println("Divide by Zero Error!!");
+				throw new IllegalArgumentException();
+			}
+			return number1.mod(number2);
 		}
 		case '|':{
-			finalValue = new BigInteger(Math.sqrt(number1.doubleValue())+"");
+			//System.out.println(Math.sqrt(number1.doubleValue()));
+			finalValue = new BigInteger((int)Math.sqrt(number1.intValue())+"");
 			return finalValue;
 			}
 		}

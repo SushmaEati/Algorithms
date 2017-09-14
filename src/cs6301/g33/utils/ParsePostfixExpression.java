@@ -20,13 +20,25 @@ public class ParsePostfixExpression {
 	// letter, we can create a static array of length 26, and initially assign
 	// them to zero)
 	static BigInteger[] variableValue = new BigInteger[26];
+	static BigInteger finalValue = new BigInteger("0");
 
 	/**
 	 * 
 	 * @param expression
 	 *            : Expression given by user
 	 */
-	public void evaluateExpression(String expression, int base) {
+	public void evaluateExpression(String expression, int base,boolean lastExpression) {
+		
+		if(lastExpression)
+		{	
+			System.out.print(base+": ");
+			while(finalValue != BigInteger.ZERO)
+			{
+				System.out.print(finalValue.mod(BigInteger.valueOf(base))+" ");
+				finalValue = finalValue.divide(BigInteger.valueOf(base));
+			}
+			System.exit(-1);
+		}
 		// Index of the character in the expression
 		int index = 0;
 		// Variable to hold the left hand operand
@@ -39,14 +51,18 @@ public class ParsePostfixExpression {
 		while (index < expression.length()) {
 			// Discard the spaces in the expression
 			if (expression.charAt(index) == ' ')
+			{
+				index++;
 				continue;
+			}
 			// If the character is an equal to ('=') start evaluating the right
 			// hand side of the expression.
 			if (expression.charAt(index) == '=') {
 				// Evaluate the expression an assign it to the operand
-				variableValue[temp_variable - 'a'] = evaluatePostfixExpression(
+				finalValue = variableValue[temp_variable - 'a'] = evaluatePostfixExpression(
 						expression.substring(index + 1, expression.length()),
 						operatorPrecedence, base);
+				break;
 			}
 			// If it is an operand, store it in a temp_variable to store the
 			// value later.
@@ -66,7 +82,7 @@ public class ParsePostfixExpression {
 	BigInteger evaluatePostfixExpression(String postfixExpression,
 			OperatorPrecedence operatorPrecedence, int base) {
 		int index = 0;
-		System.out.println("Postifix expression is:"+postfixExpression);
+		//System.out.println("Postifix expression is:"+postfixExpression);
 		// Stack to store the values of the operands
 		Stack<BigInteger> stack = new Stack<BigInteger>();
 		// Temp array to hold numbers > 9
@@ -79,7 +95,10 @@ public class ParsePostfixExpression {
 			long temp_value = 0;
 			// If character is a space just continue with the loop
 			if (postfixExpression.charAt(index) == ' ')
+			{
+				index++;
 				continue;
+			}
 
 			if (operatorPrecedence.isOperator(postfixExpression.charAt(index))) {
 				if (temp_values.size() > 0) {
@@ -90,7 +109,7 @@ public class ParsePostfixExpression {
 								* (Math.pow(base, temp_values.size()-i));
 					}
 					temp_values.clear();
-					System.out.println("Pushing value to stack:"+temp_value);
+					//System.out.println("Pushing value to stack:"+temp_value);
 					stack.push(BigInteger.valueOf(temp_value));
 				}
 				if(!operatorPrecedence.needsOneOperand(postfixExpression.charAt(index)))
@@ -104,12 +123,13 @@ public class ParsePostfixExpression {
 						System.out.println("Invalid postfix expression");
 						throw e;
 					}
+					//System.out.println("Number being sent are:"+number2+" "+number1);
 					stack.push(operatorPrecedence.computeValue(number2, number1, postfixExpression.charAt(index)));
 				}
 				else
 				{
 					number1 = stack.pop();
-					stack.push(operatorPrecedence.computeValue(number2, number1, postfixExpression.charAt(index)));
+					stack.push(operatorPrecedence.computeValue(number1, BigInteger.ZERO, postfixExpression.charAt(index)));
 				}
 				//Intialize back to zero for next iterations
 				number1 = BigInteger.ZERO;
@@ -122,7 +142,7 @@ public class ParsePostfixExpression {
 				if (postfixExpression.charAt(index) >= 'a'
 						&& postfixExpression.charAt(index) <= 'z')
 				{
-					System.out.println("Variable value is:"+postfixExpression.charAt(index));
+					//System.out.println("Variable value is:"+postfixExpression.charAt(index));
 					stack.push(variableValue[postfixExpression
 												.charAt(index)-'a']);
 				}
@@ -136,13 +156,13 @@ public class ParsePostfixExpression {
 				{
 					if(temp_values.size() > 0)
 					{
-						System.out.println("Size"+temp_values.size());
+						//System.out.println("Size"+temp_values.size());
 						for (int i = temp_values.size()-1; i >=0; i--) {
 							temp_value += temp_values.get(i)
 									* (Math.pow(base, temp_values.size()-1-i));
 						}
 						temp_values.clear();
-						System.out.println("Pushing value to stack:"+temp_value);
+						//System.out.println("Pushing value to stack:"+temp_value);
 						stack.push(BigInteger.valueOf(temp_value));
 						temp_values.clear();
 						break;

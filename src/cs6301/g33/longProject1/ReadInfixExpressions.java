@@ -3,6 +3,9 @@
  */
 package cs6301.g33.longProject1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cs6301.g33.utils.ParsePostfixExpression;
 
 /**
@@ -18,12 +21,22 @@ public class ReadInfixExpressions {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int no_of_expressions = Integer.parseInt(args[0]);
+		String[] expressions = {"a = 999;"," b = 8;","c = ab^ ;","d = ab+ ;",";"};
+		int no_of_expressions = 5;
+		int base_value=10;
+		List<String> inputExpressions = new ArrayList<String>();
+		for(int i=0;i<no_of_expressions;i++)
+			inputExpressions.add(expressions[i]);
 		ParsePostfixExpression parseExpression = new ParsePostfixExpression();
 		
 		for(int index = 0 ; index< no_of_expressions; index++)
 		{
-			parseExpression.evaluateExpression(args[index+1], Integer.parseInt(args[no_of_expressions+1]));
+			//System.out.println("Reading expression:"+inputExpressions.get(index));
+			if(index == no_of_expressions-1)
+				parseExpression.evaluateExpression(inputExpressions.get(index), base_value,true);
+
+			else
+				parseExpression.evaluateExpression(inputExpressions.get(index), base_value,false);
 		}
 
 	}
