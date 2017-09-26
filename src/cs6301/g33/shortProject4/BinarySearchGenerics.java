@@ -1,12 +1,14 @@
 /**
  * 
  */
-package cs6301.practice.code;
+package cs6301.g33.shortProject4;
 
 import java.util.Scanner;
 
+import cs6301.g33.utils.BinarySearch;
+
 /**
- * @author Sushma
+ * @author Sushma, Sai Vivek
  *
  */
 public class BinarySearchGenerics implements Comparable<BinarySearchGenerics> {
@@ -23,6 +25,7 @@ public class BinarySearchGenerics implements Comparable<BinarySearchGenerics> {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		//Take input from command line to get the size of array
+		
 		int n = scanner.nextInt();
 		if(n == 0)
 		{
@@ -38,7 +41,7 @@ public class BinarySearchGenerics implements Comparable<BinarySearchGenerics> {
 		}
 		
 		//Create an object to store the element that has to be searched
-		BinarySearchGenerics item = new BinarySearchGenerics(20);
+		BinarySearchGenerics item = new BinarySearchGenerics(13);
 		
 		/**
 		 * input: Input to the binary search function
@@ -46,7 +49,6 @@ public class BinarySearchGenerics implements Comparable<BinarySearchGenerics> {
 		 * n-1 : Length of the array.
 		 * item: Item that has to be searched in the passed input array.
 		 */
-		
 		System.out.print(BinarySearch.binarySearch(input, 0, n-1, item));
 		
 		//Close the scanner.

@@ -18,7 +18,7 @@ public class ShuntingYard {
 	 * @return
 	 */
 	//Generates the postfix expression of the given input expression
-	static char[] getPostFixNotation(String infix_notation, char[] output) {
+	public static char[] getPostFixNotation(String infix_notation, char[] output) {
 		
 		
 		//Initialize the stack (This is a generic stack class in utils package

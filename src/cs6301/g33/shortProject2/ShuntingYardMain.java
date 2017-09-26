@@ -15,7 +15,7 @@ public class ShuntingYardMain {
 	public static void main(String[] args) {
 		//Provide the infix expression
 		//Sample expressions: (A *B) + (C * d), (A + B+ C+ D), (a/b)+(c/d), (A!) + B, A^B+c
-		String infix_notation = "A^B+x";
+		String infix_notation = "[({}{}]";
 		
 		//Output array to store the postfix expression
 		char[] output = new char[infix_notation.length()];
